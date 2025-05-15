@@ -4,37 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pix do Mistério</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
-    <video id="logoVideo" autoplay muted loop>
-      <source src="assets/logo.mp4" type="video/mp4" />
-    </video>
-
+    <img src="logo.png" alt="Logo Pix do Mistério" class="logo"/>
     <h1>Descubra o Número Misterioso</h1>
-    <p class="info">Contribua com apenas R$0,50 e receba um número exclusivo com acesso direto ao Mistério!</p>
-    <a id="pagarBtn" href="https://mpago.la/1sa1XN7" target="_blank" class="pix-btn">Fazer Pagamento via PIX</a>
+    <p>Contribua com apenas <strong>R$10</strong> e receba um número exclusivo com acesso direto ao Mistério!</p>
+    
+    <button id="pagarBtn">Fazer Pagamento via PIX</button>
 
-    <form id="formulario" class="hidden">
+    <div id="formulario" class="hidden">
       <h2>Preencha seus dados:</h2>
-      <input type="text" id="nome" placeholder="Seu nome" required />
-      <input type="text" id="whatsapp" placeholder="WhatsApp com DDD" required />
-      <button type="button" onclick="revelarNumero()">Ver meu número</button>
-    </form>
+      <input type="text" id="nome" placeholder="Seu nome" />
+      <input type="text" id="whatsapp" placeholder="WhatsApp (com DDD)" />
+      <button id="verNumeroBtn" class="hidden">Ver meu número</button>
+    </div>
 
     <div id="numeroRevelado" class="hidden">
       <h2>Seu número misterioso:</h2>
-      <p id="meuNumero">#...</p>
-      <button id="consultarBtn" onclick="mostrarGrafico()">Consultar meus acessos</button>
+      <h1 id="meuNumero">#...</h1>
+      <button id="consultarBtn" class="hidden" onclick="mostrarGrafico()">Consultar meus acessos</button>
     </div>
 
     <canvas id="grafico" class="hidden"></canvas>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
-  <script src="grafico.js"></script>
-  <script type="module" src="firebase.js"></script>
 </body>
 </html>
