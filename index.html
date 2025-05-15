@@ -1,68 +1,40 @@
-<!-- index.html --><!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pix do Mistério</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
-    <video src="assets/logo.mp4" autoplay muted loop class="logo"></video><h1>Descubra o Número Misterioso</h1>
-<p>Contribua com apenas R$0,50 e receba um número exclusivo com acesso direto ao Mistério!</p>
+    <video id="logoVideo" autoplay muted loop>
+      <source src="assets/logo.mp4" type="video/mp4" />
+    </video>
 
-<button id="pagarBtn">Fazer Pagamento via PIX</button>
+    <h1>Descubra o Número Misterioso</h1>
+    <p class="info">Contribua com apenas R$0,50 e receba um número exclusivo com acesso direto ao Mistério!</p>
+    <button id="pagarBtn">Fazer Pagamento via PIX</button>
 
-<div id="formulario" class="hidden">
-  <h2>Preencha seus dados:</h2>
-  <input type="text" id="nome" placeholder="Seu nome completo" required />
-  <input type="tel" id="whatsapp" placeholder="Número do WhatsApp" required />
-  <button onclick="revelarNumero()">Ver meu número</button>
-</div>
+    <form id="formulario" class="hidden">
+      <h2>Preencha seus dados:</h2>
+      <input type="text" id="nome" placeholder="Seu nome" required />
+      <input type="text" id="whatsapp" placeholder="WhatsApp com DDD" required />
+      <button type="button" onclick="revelarNumero()">Ver meu número</button>
+    </form>
 
-<div id="numeroRevelado" class="hidden">
-  <h2>Seu número misterioso:</h2>
-  <div id="meuNumero">#...</div>
-</div>
+    <div id="numeroRevelado" class="hidden">
+      <h2>Seu número misterioso:</h2>
+      <p id="meuNumero">#...</p>
+      <button id="consultarBtn" onclick="mostrarGrafico()">Consultar meus acessos</button>
+    </div>
 
-<button id="consultarBtn" class="hidden" onclick="mostrarGrafico()">Consultar meus acessos</button>
+    <canvas id="grafico" class="hidden"></canvas>
+  </div>
 
-<canvas id="grafico" class="hidden"></canvas>
-
-  </div>  <script src="firebase.js" type="module"></script>  <script src="script.js"></script>  <script src="grafico.js"></script></body>
-</html>/* style.css */ body { margin: 0; padding: 0; background: linear-gradient(145deg, #3f0071, #7f00ff); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; flex-direction: column; }
-
-.container { text-align: center; padding: 30px; background-color: rgba(0, 0, 0, 0.6); border-radius: 20px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-
-.logo { width: 200px; margin-bottom: 20px; border-radius: 10px; }
-
-input { padding: 10px; margin: 10px; border-radius: 10px; border: none; width: 80%; }
-
-button { padding: 10px 20px; margin-top: 15px; background-color: #00ff88; color: #000; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
-
-button:hover { background-color: #00cc6a; }
-
-.hidden { display: none; }
-
-canvas { margin-top: 20px; width: 100%; max-width: 500px; height: auto; }
-
-/* script.js */ document.getElementById("pagarBtn").addEventListener("click", () => { // Simula pagamento com webhook real usando Firebase depois document.getElementById("formulario").classList.remove("hidden"); });
-
-function revelarNumero() { const nome = document.getElementById("nome").value; const whatsapp = document.getElementById("whatsapp").value;
-
-if (!nome || !whatsapp) { alert("Preencha todos os campos!"); return; }
-
-const numero = Math.floor(Math.random() * 100000); document.getElementById("meuNumero").innerText = #${numero}; document.getElementById("numeroRevelado").classList.remove("hidden"); document.getElementById("consultarBtn").classList.remove("hidden");
-
-// Salva no Firebase depois }
-
-/* grafico.js */ function mostrarGrafico() { const ctx = document.getElementById("grafico").getContext("2d"); document.getElementById("grafico").classList.remove("hidden");
-
-new Chart(ctx, { type: 'bar', data: { labels: ['Você'], datasets: [{ label: 'Números adquiridos', data: [1], backgroundColor: '#00ff88' }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } }, scales: { y: { ticks: { color: '#fff' } }, x: { ticks: { color: '#fff' } } } } }); }
-
-/* firebase.js */ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-analytics.js";
-
-const firebaseConfig = { apiKey: "AIzaSyBjmlZ9tvVuolhLdcjK3cCBQ23dx5vBRJc", authDomain: "pix-do-misterio.firebaseapp.com", projectId: "pix-do-misterio", storageBucket: "pix-do-misterio.appspot.com", messagingSenderId: "771260429513", appId: "1:771260429513:web:2b0292fb84f501c5d00918", measurementId: "G-3YY5X2VRLR" };
-
-const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app);
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <script src="grafico.js"></script>
+  <script type="module" src="firebase.js"></script>
+</body>
+</html>
