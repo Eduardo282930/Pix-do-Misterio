@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro Firestore</title>
+  <script type="module">
+    // Importando Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    // Suas credenciais do Firebase (substitua por suas)
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_PROJECT_ID.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_PROJECT_ID.appspot.com",
+      messagingSenderId: "SEU_SENDER_ID",
+      appId: "SUA_APP_ID"
+    };
+
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Função para salvar dados
+    async function salvarDados() {
+      const nome = document.getElementById("nome").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const numero = document.getElementById("numero").value;
+
+      try {
+        await addDoc(collection(db, "usuarios"), {
+          nome,
+          whatsapp,
+          numero
+        });
+        alert("Dados salvos com sucesso!");
+        listarDados();
+      } catch (e) {
+        console.error("Erro ao adicionar documento: ", e);
+      }
+    }
+
+    // Função para listar dados
+    async function listarDados() {
+      const lista = document.getElementById("lista");
+      lista.innerHTML = "";
+      const querySnapshot = await getDocs(collection(db, "usuarios"));
+      querySnapshot.forEach((doc) => {
+        const dados = doc.data();
+        const item = document.createElement("li");
+        item.textContent = `Nome: ${dados.nome}, WhatsApp: ${dados.whatsapp}, Número: ${dados.numero}`;
+        lista.appendChild(item);
+      });
+    }
+
+    // Torna funções globais para o HTML usar
+    window.salvarDados = salvarDados;
+    window.listarDados = listarDados;
+  </script>
+</head>
+<body onload="listarDados()">
+  <h1>Cadastrar Usuário</h1>
+  <input type="text" id="nome" placeholder="Nome"><br>
+  <input type="text" id="whatsapp" placeholder="WhatsApp"><br>
+  <input type="number" id="numero" placeholder="Número"><br>
+  <button onclick="salvarDados()">Salvar</button>
+
+  <h2>Lista de Usuários</h2>
+  <ul id="lista"></ul>
+</body>
+</html>
